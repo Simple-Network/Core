@@ -3,7 +3,7 @@ import EssenClient from './EssenClient'
 import * as Types from './Types'
 import * as Adapters from './Adapters'
 
-export default {
+export {
 	EssenClient,
 	EssenServer,
 	Types,
