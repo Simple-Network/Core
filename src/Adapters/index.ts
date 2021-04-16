@@ -11,7 +11,7 @@ abstract class ReadHandler<INPUT> extends ReadAdapter<INPUT, never> {
 		return this.handle(socket, input)
 	}
 
-	public abstract handle(socket: EssenClient, input: INPUT): Promise<void>;
+	public abstract handle(socket: EssenClient, input: INPUT): Promise<void>
 
 }
 

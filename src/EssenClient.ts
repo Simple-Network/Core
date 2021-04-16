@@ -55,8 +55,11 @@ class EssenClient {
 		let input = [ data ]
 		let output: Array<any> = []
 
-		for (const adapter of this._adapterPipline.writeAdapters) {
-			await Promise.all(input.map((inputData: any) => adapter.adapter.write(this, inputData, output)))
+		for (const adapter of this._adapterPipline.adapters) {
+			if (!adapter.isWritable()) continue
+			for (const inputData of input) {
+				await adapter.adapter.write(this, inputData, output)
+			}
 			input = output
 			output = []
 		}
@@ -98,8 +101,11 @@ class EssenClient {
 		let input = [ data ]
 		let output: Array<any> = []
 
-		for (const adapter of this._adapterPipline.readAdapters) {
-			await Promise.all(input.map((inputData: any) => adapter.adapter.read(this, inputData, output)))
+		for (const adapter of this._adapterPipline.adapters) {
+			if (!adapter.isReadable()) continue
+			for (const inputData of input) {
+				await adapter.adapter.read(this, inputData, output)
+			}
 			input = output
 			output = []
 		}

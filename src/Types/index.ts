@@ -1,4 +1,4 @@
-import { IpcSocketConnectOpts, ListenOptions, TcpSocketConnectOpts } from 'net';
+import { IpcSocketConnectOpts, ListenOptions, TcpSocketConnectOpts } from 'net'
 
 type Callback<T> = (options: T) => void
 
