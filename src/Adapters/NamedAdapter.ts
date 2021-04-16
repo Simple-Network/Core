@@ -1,5 +1,5 @@
-import ReadAdapter from "./ReadAdapters"
-import WriteAdapter from "./WriteAdapter"
+import ReadAdapter from './ReadAdapters'
+import WriteAdapter from './WriteAdapter'
 
 export default class NamedAdapter<ADAPTER extends WriteAdapter<any, any> | ReadAdapter<any, any>> {
 

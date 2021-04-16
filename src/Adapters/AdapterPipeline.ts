@@ -1,6 +1,6 @@
-import NamedAdapter from "./NamedAdapter"
-import ReadAdapter from "./ReadAdapters"
-import WriteAdapter from "./WriteAdapter"
+import NamedAdapter from './NamedAdapter'
+import ReadAdapter from './ReadAdapters'
+import WriteAdapter from './WriteAdapter'
 
 export default class AdapterPipeline {
 

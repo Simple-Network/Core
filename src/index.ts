@@ -1,11 +1,11 @@
-import EssenServer from './EssenServer'
-import EssenClient from './EssenClient'
+import SNServer from './SNServer'
+import SNClient from './SNClient'
 import * as Types from './Types'
 import * as Adapters from './Adapters'
 
 export {
-	EssenClient,
-	EssenServer,
+	SNClient,
+	SNServer,
 	Types,
 	Adapters
 }

@@ -1,9 +1,9 @@
 import EventEmitter from 'events'
 import { Socket } from 'net'
-import { EssenClientLocalInfos, EssenClientRemoteInfos, EssenTcpConnectOptions, EssenIcpConnectOptions } from './Types'
+import { SNClientLocalInfos, SNClientRemoteInfos, SNTcpConnectOptions, SNIcpConnectOptions } from './Types'
 import AdapterPipeline from './Adapters/AdapterPipeline'
 
-interface EssenClientEvents {
+interface SNClientEvents {
 	close: [boolean]
 	error: [Error]
 	rawdata: [Buffer]
@@ -11,22 +11,22 @@ interface EssenClientEvents {
 	connected: [boolean]
 }
 
-interface EssenClient extends EventEmitter {
+interface SNClient extends EventEmitter {
 
-	on<K extends keyof EssenClientEvents>(event: K, listener: (...args: EssenClientEvents[K]) => void): this
-	off<K extends keyof EssenClientEvents>(event: K, listener: (...args: EssenClientEvents[K]) => void): this
-	once<K extends keyof EssenClientEvents>(event: K, listener: (...args: EssenClientEvents[K]) => void): this
-	addListener<K extends keyof EssenClientEvents>(event: K, listener: (...args: EssenClientEvents[K]) => void): this
-	prependListener<K extends keyof EssenClientEvents>(event: K, listener: (...args: EssenClientEvents[K]) => void): this
-	removeListener<K extends keyof EssenClientEvents>(event: K, listener: (...args: EssenClientEvents[K]) => void): this
-	removeAllListeners(event: keyof EssenClientEvents): this
-	listeners<K extends keyof EssenClientEvents>(event: K): ((...args: EssenClientEvents[K]) => void)[]
+	on<K extends keyof SNClientEvents>(event: K, listener: (...args: SNClientEvents[K]) => void): this
+	off<K extends keyof SNClientEvents>(event: K, listener: (...args: SNClientEvents[K]) => void): this
+	once<K extends keyof SNClientEvents>(event: K, listener: (...args: SNClientEvents[K]) => void): this
+	addListener<K extends keyof SNClientEvents>(event: K, listener: (...args: SNClientEvents[K]) => void): this
+	prependListener<K extends keyof SNClientEvents>(event: K, listener: (...args: SNClientEvents[K]) => void): this
+	removeListener<K extends keyof SNClientEvents>(event: K, listener: (...args: SNClientEvents[K]) => void): this
+	removeAllListeners(event: keyof SNClientEvents): this
+	listeners<K extends keyof SNClientEvents>(event: K): ((...args: SNClientEvents[K]) => void)[]
 	
-	emit<K extends keyof EssenClientEvents>(event: K, ...args: EssenClientEvents[K]): boolean
+	emit<K extends keyof SNClientEvents>(event: K, ...args: SNClientEvents[K]): boolean
 
 }
 
-class EssenClient {
+class SNClient {
 
 	private _connected: boolean
 	private _adapterPipline: AdapterPipeline
@@ -41,8 +41,8 @@ class EssenClient {
 		socket.on('data', (data: Buffer) => this.read0(data))
 	}
 
-	public connect(options: EssenTcpConnectOptions): this
-	public connect(options: EssenIcpConnectOptions): this
+	public connect(options: SNTcpConnectOptions): this
+	public connect(options: SNIcpConnectOptions): this
 	public connect(options: any) {
 		this.socket.connect(options, () => {
 			this._connected = true
@@ -71,7 +71,7 @@ class EssenClient {
 		}
 	}
 
-	public get remote(): EssenClientRemoteInfos {
+	public get remote(): SNClientRemoteInfos {
 		return {
 			address: this.socket.remoteAddress,
 			port: this.socket.remotePort,
@@ -79,7 +79,7 @@ class EssenClient {
 		}
 	}
 
-	public get local(): EssenClientLocalInfos {
+	public get local(): SNClientLocalInfos {
 		return {
 			address: this.socket.localAddress,
 			port: this.socket.localPort
@@ -121,4 +121,4 @@ class EssenClient {
 	}
 }
 
-export default EssenClient
+export default SNClient
