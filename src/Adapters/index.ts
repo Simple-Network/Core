@@ -3,7 +3,7 @@ import ReadAdapter from './ReadAdapters'
 import WriteAdapter from './WriteAdapter'
 import NamedAdapter from './NamedAdapter'
 import AdapterPipeline from './AdapterPipeline'
-
+import ExceptionHandler from './ExceptionHandler'
 
 abstract class ReadHandler<INPUT> extends ReadAdapter<INPUT, never> {
 
@@ -20,5 +20,6 @@ export {
 	WriteAdapter,
 	ReadHandler,
 	NamedAdapter,
+	ExceptionHandler,
 	AdapterPipeline
 }

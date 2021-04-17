@@ -96,6 +96,10 @@ class SNClient {
 		this.close0()
 	}
 
+	public get pipeline() {
+		return this._adapterPipline
+	}
+
 	private async read0(data: Buffer) {
 		this.emit('rawdata', data)
 		let input = [ data ]
@@ -104,15 +108,24 @@ class SNClient {
 		for (const adapter of this._adapterPipline.adapters) {
 			if (!adapter.isReadable()) continue
 			for (const inputData of input) {
-				await adapter.adapter.read(this, inputData, output)
+				try {
+					await adapter.adapter.read(this, inputData, output)
+				} catch (error) {
+					this.error(inputData, error)
+					return
+				}
 			}
 			input = output
 			output = []
 		}
 	}
 
-	public get pipeline() {
-		return this._adapterPipline
+	private error(current: any, error: any) {
+		for (const adapter of this._adapterPipline.adapters) {
+			if (!adapter.isExceptionHandler()) continue
+
+			adapter.adapter.handle(this, current, error)
+		}
 	}
 
 	private close0(hadError: boolean = false) {
